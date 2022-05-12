@@ -1,0 +1,67 @@
+* {
+  box-sizing: border-box;
+}
+
+.IOSPhone-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.number-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.25rem;
+  height: 75px;
+  width: 250px;
+  color: white;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  justify-content: center;
+  justify-items: center;
+  gap: 10px;
+}
+
+.btn-call {
+  grid-column: 2;
+  color: white;
+  font-size: 1.25rem;
+  background-color: #333;
+  border-radius: 1000000000px;
+  border: none;
+  width: 35px;
+  height: 35px;
+  background-color: rgb(111, 226, 121);
+}
+
+.btn-call:hover {
+  cursor: pointer;
+  background-color: rgb(94, 206, 103);
+}
+
+.btn-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: none;
+  color: white;
+  font-size: 0.85rem;
+  background-color: #333;
+  border-radius: 5px;
+  border: none;
+  width: 15px;
+  height: 15px;
+  padding: 9px;
+  margin-top: 5px;
+}
+
+.btn-delete:hover {
+  cursor: pointer;
+  background-color: rgb(63, 61, 61);
+}
