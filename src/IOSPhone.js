@@ -274,6 +274,8 @@ export default function IOSPhone() {
 
   const phoneNumberLengthExceededFontSize = () => {
     const newPhoneNumber = [...phoneNumber]
+    const phoneNumberMaxRange = () =>
+      phoneNumber.length < 13 && phoneNumber.includes('(') === false
     const phoneNumberInRange = (min, max) =>
       newPhoneNumber.length <= min &&
       newPhoneNumber.length < max &&
@@ -282,7 +284,7 @@ export default function IOSPhone() {
     const usPhoneNumberInRange = length =>
       newPhoneNumber.length <= length && newPhoneNumber.includes('(') === false
 
-    if (phoneNumber.length < 13 && phoneNumber.includes('(') === false) {
+    if (phoneNumberMaxRange()) {
       return 1.25
     } else if (phoneNumberInRange(14, 15)) {
       return 1.2
