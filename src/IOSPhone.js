@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 
-import IOSPhoneUtil from './IOSPhoneUtil'
 import {
-  phoneNumberInRange,
-  usPhoneNumberInRange,
-  hasCountryCodeInRanges,
+  numberExceedsLength,
   formatPhoneNumber,
-  numberLengthExceeded
+  phoneNumberLengthBetween,
+  threeCountryCodeDigitsRemain,
+  twoCountryCodeDigitsRemain,
+  oneCountryCodeDigitRemains
 } from './IOSPhoneUtil'
 
 export default function IOSPhone() {
@@ -163,15 +163,14 @@ export default function IOSPhone() {
     const newPhoneNumber = [...phoneNumber]
 
     const deleteDigit = () => setPhoneNumber(newPhoneNumber)
-
-    const numberExceedsLength = () =>
-      newPhoneNumber.length <= 11 &&
-      newPhoneNumber.length > 1 &&
-      newPhoneNumber.includes('(', ')') === false
-    const countryCodeLengthBetween = (max, min) =>
-      newPhoneNumber.length <= max &&
-      newPhoneNumber.length > min &&
-      newPhoneNumber.includes('(', ')')
+    const formatPhoneNumber = newPhoneNumber => {
+      newPhoneNumber.splice(1, 0, ' ')
+      newPhoneNumber.splice(2, 0, '(')
+      newPhoneNumber.splice(6, 0, ')')
+      newPhoneNumber.splice(7, 0, ' ')
+      newPhoneNumber.splice(11, 0, '-')
+      setPhoneNumber(newPhoneNumber)
+    }
     const removeLineNumberHyphen = () => {
       newPhoneNumber.splice(11, 1)
       setPhoneNumber(newPhoneNumber)
@@ -181,47 +180,35 @@ export default function IOSPhone() {
       newPhoneNumber.splice(7, 1)
       setPhoneNumber(newPhoneNumber)
     }
-    const threeCountryCodeDigitsRemain = () =>
-      newPhoneNumber.length <= 7 &&
-      newPhoneNumber.length > 1 &&
-      newPhoneNumber[5] !== ' '
     const removeLastCountryCodeDigit = () => {
       newPhoneNumber.splice(5, 1, ' ')
       newPhoneNumber.splice(6, 0, ')')
       setPhoneNumber(newPhoneNumber)
     }
-    const twoCountryCodeDigitsRemain = () =>
-      newPhoneNumber.length <= 7 &&
-      newPhoneNumber.length > 1 &&
-      newPhoneNumber[4] !== ' '
     const removeSecondCountryCodeDigit = () => {
       newPhoneNumber.splice(4, 1, ' ')
       newPhoneNumber.splice(6, 0, ')')
       setPhoneNumber(newPhoneNumber)
     }
-    const oneCountryCodeDigitRemains = () =>
-      newPhoneNumber.length <= 6 &&
-      newPhoneNumber.length > 1 &&
-      newPhoneNumber[3] !== ' '
     const removeFirstCountryCodeDigit = () => setPhoneNumber(['1'])
 
     newPhoneNumber.pop()
 
-    if (numberExceedsLength()) {
-      formatPhoneNumber()
-    } else if (countryCodeLengthBetween(16, 13)) {
+    if (numberExceedsLength(newPhoneNumber)) {
+      formatPhoneNumber(newPhoneNumber)
+    } else if (phoneNumberLengthBetween(newPhoneNumber, 16, 13)) {
       deleteDigit()
-    } else if (countryCodeLengthBetween(12, 11)) {
+    } else if (phoneNumberLengthBetween(newPhoneNumber, 12, 11)) {
       removeLineNumberHyphen()
-    } else if (countryCodeLengthBetween(11, 9)) {
+    } else if (phoneNumberLengthBetween(newPhoneNumber, 11, 9)) {
       deleteDigit()
-    } else if (countryCodeLengthBetween(8, 7)) {
+    } else if (phoneNumberLengthBetween(newPhoneNumber, 8, 7)) {
       removeExchangeCode()
-    } else if (threeCountryCodeDigitsRemain()) {
+    } else if (threeCountryCodeDigitsRemain(newPhoneNumber)) {
       removeLastCountryCodeDigit()
-    } else if (twoCountryCodeDigitsRemain()) {
+    } else if (twoCountryCodeDigitsRemain(newPhoneNumber)) {
       removeSecondCountryCodeDigit()
-    } else if (oneCountryCodeDigitRemains()) {
+    } else if (oneCountryCodeDigitRemains(newPhoneNumber)) {
       removeFirstCountryCodeDigit()
     } else {
       deleteDigit()

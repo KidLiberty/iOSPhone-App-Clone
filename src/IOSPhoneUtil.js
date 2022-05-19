@@ -1,23 +1,29 @@
-export const phoneNumberInRange = (min, max, newPhoneNumber) =>
-  newPhoneNumber.length <= min &&
-  newPhoneNumber.length < max &&
-  newPhoneNumber[0] !== '1' &&
-  newPhoneNumber.includes('(') === false
-export const usPhoneNumberInRange = (length, newPhoneNumber) =>
-  newPhoneNumber.length <= length && newPhoneNumber.includes('(') === false
 // backspaceCountryCode()
-export const hasCountryCodeInRanges = (newPhoneNumber, numCeiling, numFloor) =>
-  newPhoneNumber.length <= numCeiling &&
-  newPhoneNumber.length > numFloor &&
-  newPhoneNumber.includes('(', ')')
+export const numberExceedsLength = newPhoneNumber =>
+  newPhoneNumber.length <= 11 &&
+  newPhoneNumber.length > 1 &&
+  newPhoneNumber.includes('(', ')') === false
 export const formatPhoneNumber = newPhoneNumber => {
   newPhoneNumber.splice(1, 0, ' ')
   newPhoneNumber.splice(2, 0, '(')
   newPhoneNumber.splice(6, 0, ')')
   newPhoneNumber.splice(7, 0, ' ')
   newPhoneNumber.splice(11, 0, '-')
+  return newPhoneNumber
 }
-export const numberLengthExceeded = newPhoneNumber =>
-  newPhoneNumber.length <= 11 &&
+export const phoneNumberLengthBetween = (newPhoneNumber, max, min) =>
+  newPhoneNumber.length <= max &&
+  newPhoneNumber.length > min &&
+  newPhoneNumber.includes('(', ')')
+export const threeCountryCodeDigitsRemain = newPhoneNumber =>
+  newPhoneNumber.length <= 7 &&
   newPhoneNumber.length > 1 &&
-  newPhoneNumber.includes('(', ')') === false
+  newPhoneNumber[5] !== ' '
+export const twoCountryCodeDigitsRemain = newPhoneNumber =>
+  newPhoneNumber.length <= 7 &&
+  newPhoneNumber.length > 1 &&
+  newPhoneNumber[4] !== ' '
+export const oneCountryCodeDigitRemains = newPhoneNumber =>
+  newPhoneNumber.length <= 6 &&
+  newPhoneNumber.length > 1 &&
+  newPhoneNumber[3] !== ' '
