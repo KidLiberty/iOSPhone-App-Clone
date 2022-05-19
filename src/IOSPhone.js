@@ -1,6 +1,13 @@
 import React, { useState } from 'react'
 
 import IOSPhoneUtil from './IOSPhoneUtil'
+import {
+  phoneNumberInRange,
+  usPhoneNumberInRange,
+  hasCountryCodeInRanges,
+  formatPhoneNumber,
+  numberLengthExceeded
+} from './IOSPhoneUtil'
 
 export default function IOSPhone() {
   const [phoneNumber, setPhoneNumber] = useState([])
@@ -156,15 +163,7 @@ export default function IOSPhone() {
     const newPhoneNumber = [...phoneNumber]
 
     const deleteDigit = () => setPhoneNumber(newPhoneNumber)
-    const formatPhoneNumber = () => {
-      newPhoneNumber.splice(1, 0, ' ')
-      newPhoneNumber.splice(2, 0, '(')
-      newPhoneNumber.splice(6, 0, ')')
-      newPhoneNumber.splice(7, 0, ' ')
-      newPhoneNumber.splice(11, 0, '-')
 
-      setPhoneNumber(newPhoneNumber)
-    }
     const numberExceedsLength = () =>
       newPhoneNumber.length <= 11 &&
       newPhoneNumber.length > 1 &&
@@ -239,6 +238,8 @@ export default function IOSPhone() {
       newPhoneNumber.splice(0, 0, '(')
       newPhoneNumber.splice(4, 0, ') ')
       newPhoneNumber.splice(8, 0, '-')
+
+      setPhoneNumber(newPhoneNumber)
     }
     const hasAreaCodeParenthesis = () =>
       newPhoneNumber.length >= 8 && newPhoneNumber.includes('(', ') ', '-')
@@ -256,7 +257,6 @@ export default function IOSPhone() {
       setPhoneNumber(newPhoneNumber)
     } else if (numberIsInRange()) {
       appendAreaCodeParenthesis()
-      setPhoneNumber(newPhoneNumber)
     } else if (hasAreaCodeParenthesis()) {
       removeAreaCodeParenthesis()
       setPhoneNumber(newPhoneNumber)
@@ -309,7 +309,7 @@ export default function IOSPhone() {
     }
   }
 
-  // Dev
+  // Dev Tools
   const getLength = () => {
     console.log('Length: ' + phoneNumber.length)
     console.log(phoneNumber)
