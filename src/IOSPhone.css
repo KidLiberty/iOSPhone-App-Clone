@@ -5,8 +5,8 @@
 .IOSPhone-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .number-container {
@@ -17,6 +17,16 @@
   height: 75px;
   width: 250px;
   color: white;
+}
+
+.btn {
+  color: white;
+  font-size: 1rem;
+  background-color: #333;
+  border-radius: 1000000000px;
+  border: none;
+  width: 35px;
+  height: 35px;
 }
 
 .button-grid {
@@ -64,4 +74,23 @@
 .btn-delete:hover {
   cursor: pointer;
   background-color: rgb(63, 61, 61);
+}
+
+.btn-letters {
+  font-size: 6px;
+  font-weight: bold;
+  padding: none;
+}
+
+.btn:hover {
+  background-color: #555;
+  cursor: pointer;
+}
+
+.fa-phone {
+  font-size: 1rem;
+  transform: scaleX(-1);
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
 }

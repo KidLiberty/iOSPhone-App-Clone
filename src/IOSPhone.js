@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {
+  ButtonNumberValues,
+  ButtonLetterValues,
   numberExceedsLength,
   formatPhoneNumber,
   phoneNumberLengthBetween,
@@ -11,12 +14,14 @@ import {
 
 export default function IOSPhone() {
   const [phoneNumber, setPhoneNumber] = useState([])
-  const ButtonValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, '*', 0, '#']
 
   const NumberButton = props => (
-    <button className='btn' onClick={props.onClick}>
-      {props.value}
-    </button>
+    <div className='btn'>
+      <button className='btn' onClick={props.onClick}>
+        {props.value}
+        <div className='btn-letters'>{props.letter}</div>
+      </button>
+    </div>
   )
 
   function dial(number) {
@@ -321,11 +326,9 @@ export default function IOSPhone() {
     }
   }
 
-  // Dev Tools
+  // Dev
   const getLength = () => {
-    console.log('Length: ' + phoneNumber.length)
     console.log(phoneNumber)
-    console.log(phoneNumber.length === 7 && phoneNumber[5] !== ' ')
   }
 
   return (
@@ -338,24 +341,34 @@ export default function IOSPhone() {
       </div>
       <div className='button-grid-container'>
         <div className='button-grid'>
-          {ButtonValues.map(number => (
-            <NumberButton
-              key={number}
-              value={number}
-              onClick={() => {
-                dial(number.toString())
-              }}
-            />
-          ))}
-          <button className='btn-call'></button>
+          {ButtonNumberValues.map(
+            number => (
+              <NumberButton
+                key={number}
+                value={number}
+                letter={ButtonLetterValues[number]}
+                onClick={() => dial(number)}
+              />
+            ),
+            console.log(ButtonNumberValues),
+            console.log(ButtonLetterValues)
+          )}
+
+          <button className='btn-call'>
+            <i className='fa fa-phone' aria-hidden='true'></i>
+          </button>
           {phoneNumber.length > 0 && (
-            <button className=' btn-delete' onClick={() => backspace()}>
+            <button className='btn-delete' onClick={backspace}>
               x
             </button>
           )}
         </div>
-        <button className='btn' onClick={() => getLength()}>
-          L
+        <button
+          className='btn'
+          style={{ fontSize: '.6rem' }}
+          onClick={getLength}
+        >
+          Array Size
         </button>
       </div>
     </div>
