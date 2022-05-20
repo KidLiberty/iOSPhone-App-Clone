@@ -85,6 +85,28 @@ export default function IOSPhone() {
     const dialLineNumber = () =>
       setPhoneNumber([...newPhoneNumber, '-', number])
     const phoneNumberLengthExceeded = () => newPhoneNumber.length >= 16
+    // Also used in dialNumberWithAreaCode()
+    const formatExceededLengthNumber = number => {
+      const areaCodeLengthExceeded = () =>
+        newPhoneNumber.length >= 13 &&
+        newPhoneNumber.length < 16 &&
+        newPhoneNumber.includes('(', ') ', '-')
+      if (areaCodeLengthExceeded()) {
+        newPhoneNumber.splice(0, 1)
+        newPhoneNumber.splice(3, 1)
+        newPhoneNumber.splice(6, 1)
+      } else if (
+        newPhoneNumber.length >= 16 &&
+        newPhoneNumber.includes('(', ')', ' ', '-')
+      ) {
+        newPhoneNumber.splice(1, 1)
+        newPhoneNumber.splice(1, 1)
+        newPhoneNumber.splice(4, 1)
+        newPhoneNumber.splice(4, 1)
+        newPhoneNumber.splice(7, 1)
+      }
+      setPhoneNumber([...newPhoneNumber, number])
+    }
 
     if (numberStartsWithOne()) {
       dialNumber()
@@ -110,6 +132,44 @@ export default function IOSPhone() {
   }
 
   function dialNumberWithAreaCode(number) {
+    const newPhoneNumber = [...phoneNumber]
+    const appendAreaCodeToNumber = number => {
+      if (newPhoneNumber[3] !== '-') {
+        newPhoneNumber.splice(4, 0, '-')
+      }
+      setPhoneNumber([...newPhoneNumber, number])
+    }
+    const shiftAreaCode = number => {
+      if (newPhoneNumber[3] === '-') {
+        newPhoneNumber.splice(0, 0, '(')
+        newPhoneNumber.splice(4, 0, ') ')
+        newPhoneNumber.splice(5, 1)
+        newPhoneNumber.splice(8, 0, '-')
+      }
+      setPhoneNumber([...newPhoneNumber, number])
+    }
+    const formatExceededLengthNumber = number => {
+      const areaCodeLengthExceeded = () =>
+        newPhoneNumber.length >= 13 &&
+        newPhoneNumber.length < 16 &&
+        newPhoneNumber.includes('(', ') ', '-')
+      if (areaCodeLengthExceeded()) {
+        newPhoneNumber.splice(0, 1)
+        newPhoneNumber.splice(3, 1)
+        newPhoneNumber.splice(6, 1)
+      } else if (
+        newPhoneNumber.length >= 16 &&
+        newPhoneNumber.includes('(', ')', ' ', '-')
+      ) {
+        newPhoneNumber.splice(1, 1)
+        newPhoneNumber.splice(1, 1)
+        newPhoneNumber.splice(4, 1)
+        newPhoneNumber.splice(4, 1)
+        newPhoneNumber.splice(7, 1)
+      }
+      setPhoneNumber([...newPhoneNumber, number])
+    }
+
     if (phoneNumber.length > 2 && phoneNumber.length < 8) {
       appendAreaCodeToNumber(number)
     } else if (phoneNumber.length >= 7 && phoneNumber.length < 13) {
@@ -119,48 +179,6 @@ export default function IOSPhone() {
     } else {
       setPhoneNumber([...phoneNumber, number])
     }
-  }
-
-  function appendAreaCodeToNumber(number) {
-    const newPhoneNumber = [...phoneNumber]
-    if (newPhoneNumber[3] !== '-') {
-      newPhoneNumber.splice(4, 0, '-')
-    }
-    setPhoneNumber([...newPhoneNumber, number])
-  }
-
-  function shiftAreaCode(number) {
-    const newPhoneNumber = [...phoneNumber]
-    if (newPhoneNumber[3] === '-') {
-      newPhoneNumber.splice(0, 0, '(')
-      newPhoneNumber.splice(4, 0, ') ')
-      newPhoneNumber.splice(5, 1)
-      newPhoneNumber.splice(8, 0, '-')
-    }
-    setPhoneNumber([...newPhoneNumber, number])
-  }
-
-  function formatExceededLengthNumber(number) {
-    const newPhoneNumber = [...phoneNumber]
-    const areaCodeLengthExceeded = () =>
-      newPhoneNumber.length >= 13 &&
-      newPhoneNumber.length < 16 &&
-      newPhoneNumber.includes('(', ') ', '-')
-    if (areaCodeLengthExceeded()) {
-      newPhoneNumber.splice(0, 1)
-      newPhoneNumber.splice(3, 1)
-      newPhoneNumber.splice(6, 1)
-    } else if (
-      newPhoneNumber.length >= 16 &&
-      newPhoneNumber.includes('(', ')', ' ', '-')
-    ) {
-      newPhoneNumber.splice(1, 1)
-      newPhoneNumber.splice(1, 1)
-      newPhoneNumber.splice(4, 1)
-      newPhoneNumber.splice(4, 1)
-      newPhoneNumber.splice(7, 1)
-    }
-    setPhoneNumber([...newPhoneNumber, number])
   }
 
   function backspaceCountryCode() {
