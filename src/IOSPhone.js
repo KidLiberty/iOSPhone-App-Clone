@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {
   ButtonNumberValues,
@@ -19,7 +18,9 @@ export default function IOSPhone() {
     <div className='btn'>
       <button className='btn' onClick={props.onClick}>
         {props.value}
-        <div className='btn-letters'>{props.letter}</div>
+        <div className={props.value === '0' ? 'btn-letters-0' : 'btn-letters'}>
+          {props.letter}
+        </div>
       </button>
     </div>
   )
@@ -326,11 +327,6 @@ export default function IOSPhone() {
     }
   }
 
-  // Dev
-  const getLength = () => {
-    console.log(phoneNumber)
-  }
-
   return (
     <div className='IOSPhone-container'>
       <div
@@ -341,19 +337,14 @@ export default function IOSPhone() {
       </div>
       <div className='button-grid-container'>
         <div className='button-grid'>
-          {ButtonNumberValues.map(
-            number => (
-              <NumberButton
-                key={number}
-                value={number}
-                letter={ButtonLetterValues[number]}
-                onClick={() => dial(number)}
-              />
-            ),
-            console.log(ButtonNumberValues),
-            console.log(ButtonLetterValues)
-          )}
-
+          {ButtonNumberValues.map(number => (
+            <NumberButton
+              key={number}
+              value={number}
+              letter={ButtonLetterValues[number]}
+              onClick={() => dial(number)}
+            />
+          ))}
           <button className='btn-call'>
             <i className='fa fa-phone' aria-hidden='true'></i>
           </button>
@@ -363,13 +354,6 @@ export default function IOSPhone() {
             </button>
           )}
         </div>
-        <button
-          className='btn'
-          style={{ fontSize: '.6rem' }}
-          onClick={getLength}
-        >
-          Array Size
-        </button>
       </div>
     </div>
   )

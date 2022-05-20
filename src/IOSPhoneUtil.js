@@ -13,7 +13,7 @@ export const ButtonNumberValues = [
   '#'
 ]
 export const ButtonLetterValues = [
-  ' ',
+  '+',
   ' ',
   'A B C',
   'D E F',
@@ -22,8 +22,7 @@ export const ButtonLetterValues = [
   'M N O',
   'P Q R S',
   'T U V',
-  'W X Y Z',
-  '+'
+  'W X Y Z'
 ]
 
 // backspaceCountryCode()

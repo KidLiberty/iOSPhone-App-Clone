@@ -83,6 +83,13 @@
   margin-top: -2px;
 }
 
+.btn-letters-0 {
+  font-size: 7.5px;
+  font-weight: bold;
+  padding: none;
+  margin-top: -4px;
+}
+
 .btn:hover {
   background-color: #555;
   cursor: pointer;
