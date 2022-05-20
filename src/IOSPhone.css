@@ -77,9 +77,10 @@
 }
 
 .btn-letters {
-  font-size: 6px;
+  font-size: 4.5px;
   font-weight: bold;
   padding: none;
+  margin-top: -2px;
 }
 
 .btn:hover {
@@ -88,7 +89,8 @@
 }
 
 .fa-phone {
-  font-size: 1rem;
+  font-size: 0.8rem;
+  padding-bottom: 5px;
   transform: scaleX(-1);
   -moz-transform: scaleX(-1);
   -webkit-transform: scaleX(-1);
