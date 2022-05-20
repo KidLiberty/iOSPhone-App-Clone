@@ -42,7 +42,9 @@ export default function IOSPhone() {
     const newPhoneNumber = [...phoneNumber]
     const dialNumber = () => setPhoneNumber([...newPhoneNumber, number])
     const numberStartsWithOne = () =>
-      newPhoneNumber.length === 1 && number === '1'
+      newPhoneNumber.length === 0 && number === '1'
+    const secondDigitIsOne = () =>
+      (newPhoneNumber[0] === '1' && number === '1') || newPhoneNumber[1] === '1'
     const dialingFirstCountryCodeDigit = () => newPhoneNumber.length === 1
     const dialFirstCountryCodeDigit = () =>
       setPhoneNumber(`1 (${number}  )`.split(''))
@@ -85,6 +87,8 @@ export default function IOSPhone() {
     const phoneNumberLengthExceeded = () => newPhoneNumber.length >= 16
 
     if (numberStartsWithOne()) {
+      dialNumber()
+    } else if (secondDigitIsOne()) {
       dialNumber()
     } else if (dialingFirstCountryCodeDigit()) {
       dialFirstCountryCodeDigit()
@@ -163,6 +167,7 @@ export default function IOSPhone() {
     const newPhoneNumber = [...phoneNumber]
 
     const deleteDigit = () => setPhoneNumber(newPhoneNumber)
+    const numberIsInvalid = () => newPhoneNumber[1] === '1'
     const formatPhoneNumber = newPhoneNumber => {
       newPhoneNumber.splice(1, 0, ' ')
       newPhoneNumber.splice(2, 0, '(')
@@ -194,7 +199,9 @@ export default function IOSPhone() {
 
     newPhoneNumber.pop()
 
-    if (numberExceedsLength(newPhoneNumber)) {
+    if (numberIsInvalid()) {
+      deleteDigit()
+    } else if (numberExceedsLength(newPhoneNumber)) {
       formatPhoneNumber(newPhoneNumber)
     } else if (phoneNumberLengthBetween(newPhoneNumber, 16, 13)) {
       deleteDigit()
