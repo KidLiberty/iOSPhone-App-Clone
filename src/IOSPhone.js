@@ -50,7 +50,10 @@ export default function IOSPhone() {
     const numberStartsWithOne = () =>
       newPhoneNumber.length === 0 && number === '1'
     const secondDigitIsOne = () =>
-      (newPhoneNumber[0] === '1' && number === '1') || newPhoneNumber[1] === '1'
+      (newPhoneNumber.length <= 13 &&
+        newPhoneNumber[0] === '1' &&
+        number === '1') ||
+      newPhoneNumber[1] === '1'
     const dialingFirstCountryCodeDigit = () => newPhoneNumber.length === 1
     const dialFirstCountryCodeDigit = () =>
       setPhoneNumber(`1 (${number}  )`.split(''))
@@ -292,6 +295,8 @@ export default function IOSPhone() {
 
   const phoneNumberLengthExceededFontSize = () => {
     const newPhoneNumber = [...phoneNumber]
+
+    // Util - needs tweaking?
     const phoneNumberMaxRange = () =>
       phoneNumber.length < 13 && phoneNumber.includes('(') === false
     const phoneNumberInRange = (min, max) =>
@@ -303,27 +308,27 @@ export default function IOSPhone() {
       newPhoneNumber.length <= length && newPhoneNumber.includes('(') === false
 
     if (phoneNumberMaxRange()) {
-      return 1.25
-    } else if (phoneNumberInRange(14, 15)) {
-      return 1.2
-    } else if (phoneNumberInRange(15, 16)) {
-      return 1.15
-    } else if (phoneNumberInRange(16, 17)) {
-      return 1.1
-    } else if (phoneNumberInRange(17, 18)) {
-      return 1.05
-    } else if (phoneNumberInRange(18, 19)) {
       return 1
+    } else if (phoneNumberInRange(14, 15)) {
+      return 0.95
+    } else if (phoneNumberInRange(15, 16)) {
+      return 0.9
+    } else if (phoneNumberInRange(16, 17)) {
+      return 0.85
+    } else if (phoneNumberInRange(17, 18)) {
+      return 0.8
+    } else if (phoneNumberInRange(18, 19)) {
+      return 0.75
     } else if (usPhoneNumberInRange(14)) {
-      return 1.25
+      return 0.95
     } else if (usPhoneNumberInRange(15)) {
-      return 1.2
+      return 0.9
     } else if (usPhoneNumberInRange(16)) {
-      return 1.15
+      return 0.85
     } else if (usPhoneNumberInRange(17)) {
-      return 1.1
+      return 0.8
     } else if (usPhoneNumberInRange(18)) {
-      return 1.05
+      return 0.75
     }
   }
 
