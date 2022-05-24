@@ -1,18 +1,30 @@
 import React, { useState } from 'react'
 
 import {
+  /* */
   ButtonNumberValues,
   ButtonLetterValues,
   numberExceedsLength,
+  /* dialNumberWithCountryCode */
+  numberStartsWithOne,
+  secondDigitIsOne,
+  dialingFirstCountryCodeDigit,
+  /* formatCountryCode */
   formatPhoneNumber,
   phoneNumberLengthBetween,
   threeCountryCodeDigitsRemain,
   twoCountryCodeDigitsRemain,
-  oneCountryCodeDigitRemains
+  oneCountryCodeDigitRemains,
+  /* formatExceededLengthFont */
+  phoneNumberMaxRange,
+  phoneNumberInRange,
+  usPhoneNumberInRange
 } from './IOSPhoneUtil'
 
 export default function IOSPhone() {
   const [phoneNumber, setPhoneNumber] = useState([])
+  // Global state?
+  const newPhoneNumber = [...phoneNumber]
 
   const NumberButton = props => (
     <div className='btn'>
@@ -47,14 +59,6 @@ export default function IOSPhone() {
   function dialNumberWithCountryCode(number) {
     const newPhoneNumber = [...phoneNumber]
     const dialNumber = () => setPhoneNumber([...newPhoneNumber, number])
-    const numberStartsWithOne = () =>
-      newPhoneNumber.length === 0 && number === '1'
-    const secondDigitIsOne = () =>
-      (newPhoneNumber.length <= 13 &&
-        newPhoneNumber[0] === '1' &&
-        number === '1') ||
-      newPhoneNumber[1] === '1'
-    const dialingFirstCountryCodeDigit = () => newPhoneNumber.length === 1
     const dialFirstCountryCodeDigit = () =>
       setPhoneNumber(`1 (${number}  )`.split(''))
     const dialingSecondCountryCodeDigit = () =>
@@ -117,11 +121,11 @@ export default function IOSPhone() {
       setPhoneNumber([...newPhoneNumber, number])
     }
 
-    if (numberStartsWithOne()) {
+    if (numberStartsWithOne(newPhoneNumber, number)) {
       dialNumber()
-    } else if (secondDigitIsOne()) {
+    } else if (secondDigitIsOne(newPhoneNumber, number)) {
       dialNumber()
-    } else if (dialingFirstCountryCodeDigit()) {
+    } else if (dialingFirstCountryCodeDigit(newPhoneNumber)) {
       dialFirstCountryCodeDigit()
     } else if (dialingSecondCountryCodeDigit()) {
       dialSecondCountryCodeDigit()
@@ -250,7 +254,7 @@ export default function IOSPhone() {
   }
 
   function backspaceAreaCode() {
-    const newPhoneNumber = [...phoneNumber]
+    // const newPhoneNumber = [...phoneNumber]
     const numberExceedsLength = () => newPhoneNumber.length >= 11
     const numberIsInRange = () =>
       newPhoneNumber.length >= 10 &&
@@ -293,41 +297,31 @@ export default function IOSPhone() {
     }
   }
 
-  const phoneNumberLengthExceededFontSize = () => {
-    const newPhoneNumber = [...phoneNumber]
+  const formatExceededLengthFont = () => {
+    // Is this better do as a global state?
+    // const newPhoneNumber = [...phoneNumber]
 
-    // Util - needs tweaking?
-    const phoneNumberMaxRange = () =>
-      phoneNumber.length < 13 && phoneNumber.includes('(') === false
-    const phoneNumberInRange = (min, max) =>
-      newPhoneNumber.length <= min &&
-      newPhoneNumber.length < max &&
-      newPhoneNumber[0] !== '1' &&
-      newPhoneNumber.includes('(') === false
-    const usPhoneNumberInRange = length =>
-      newPhoneNumber.length <= length && newPhoneNumber.includes('(') === false
-
-    if (phoneNumberMaxRange()) {
+    if (phoneNumberMaxRange(newPhoneNumber)) {
       return 1
-    } else if (phoneNumberInRange(14, 15)) {
+    } else if (phoneNumberInRange(newPhoneNumber, 14, 15)) {
       return 0.95
-    } else if (phoneNumberInRange(15, 16)) {
+    } else if (phoneNumberInRange(newPhoneNumber, 15, 16)) {
       return 0.9
-    } else if (phoneNumberInRange(16, 17)) {
+    } else if (phoneNumberInRange(newPhoneNumber, 16, 17)) {
       return 0.85
-    } else if (phoneNumberInRange(17, 18)) {
+    } else if (phoneNumberInRange(newPhoneNumber, 17, 18)) {
       return 0.8
-    } else if (phoneNumberInRange(18, 19)) {
+    } else if (phoneNumberInRange(newPhoneNumber, 18, 19)) {
       return 0.75
-    } else if (usPhoneNumberInRange(14)) {
+    } else if (usPhoneNumberInRange(newPhoneNumber, 14)) {
       return 0.95
-    } else if (usPhoneNumberInRange(15)) {
+    } else if (usPhoneNumberInRange(newPhoneNumber, 15)) {
       return 0.9
-    } else if (usPhoneNumberInRange(16)) {
+    } else if (usPhoneNumberInRange(newPhoneNumber, 16)) {
       return 0.85
-    } else if (usPhoneNumberInRange(17)) {
+    } else if (usPhoneNumberInRange(newPhoneNumber, 17)) {
       return 0.8
-    } else if (usPhoneNumberInRange(18)) {
+    } else if (usPhoneNumberInRange(newPhoneNumber, 18)) {
       return 0.75
     }
   }
@@ -335,10 +329,15 @@ export default function IOSPhone() {
   return (
     <div className='IOSPhone-container'>
       <div
-        className='number-container'
-        style={{ fontSize: `${phoneNumberLengthExceededFontSize()}rem` }}
+        className='phone-number-container'
+        style={{ fontSize: `${formatExceededLengthFont()}rem` }}
       >
-        {phoneNumber}
+        <div>
+          <div className='phone-number'>{phoneNumber}</div>
+          <div className='add-number-text'>
+            <a href='#'>{phoneNumber.length > 0 && 'Add Number'}</a>
+          </div>
+        </div>
       </div>
       <div className='button-grid-container'>
         <div className='button-grid'>

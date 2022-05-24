@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-.number-container {
+.phone-number-container {
   display: flex;
   justify-content: center;
   text-align: center;
@@ -17,6 +17,22 @@
   height: 75px;
   width: 250px;
   color: white;
+}
+
+.phone-number {
+  height: 25px;
+  width: 145px;
+  overflow: hidden;
+}
+
+.add-number-text {
+  color: blue;
+  font-size: 0.45rem;
+  height: 10px;
+}
+
+.add-number-text a {
+  text-decoration: none;
 }
 
 .btn {

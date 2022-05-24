@@ -25,7 +25,19 @@ export const ButtonLetterValues = [
   'W X Y Z'
 ]
 
-// backspaceCountryCode()
+/* dialNumberWithCountryCode */
+export const numberStartsWithOne = (newPhoneNumber, number) =>
+  newPhoneNumber.length === 0 && number === '1'
+export const secondDigitIsOne = (newPhoneNumber, number) =>
+  (newPhoneNumber.length <= 13 &&
+    newPhoneNumber[0] === '1' &&
+    newPhoneNumber.includes('(') === false &&
+    number === '1') ||
+  newPhoneNumber[1] === '1'
+export const dialingFirstCountryCodeDigit = newPhoneNumber =>
+  newPhoneNumber.length === 1
+
+/* backspaceCountryCode */
 export const numberExceedsLength = newPhoneNumber =>
   newPhoneNumber.length <= 11 &&
   newPhoneNumber.length > 1 &&
@@ -54,3 +66,14 @@ export const oneCountryCodeDigitRemains = newPhoneNumber =>
   newPhoneNumber.length <= 6 &&
   newPhoneNumber.length > 1 &&
   newPhoneNumber[3] !== ' '
+
+/* formatExceededLengthFont */
+export const phoneNumberMaxRange = newPhoneNumber =>
+  newPhoneNumber.length < 13 && newPhoneNumber.includes('(') === false
+export const phoneNumberInRange = (newPhoneNumber, min, max) =>
+  newPhoneNumber.length <= min &&
+  newPhoneNumber.length < max &&
+  newPhoneNumber[0] !== '1' &&
+  newPhoneNumber.includes('(') === false
+export const usPhoneNumberInRange = (newPhoneNumber, length) =>
+  newPhoneNumber.length <= length && newPhoneNumber.includes('(') === false
