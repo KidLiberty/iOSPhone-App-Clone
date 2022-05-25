@@ -9,6 +9,10 @@ import {
   numberStartsWithOne,
   secondDigitIsOne,
   dialingFirstCountryCodeDigit,
+  dialingSecondCountryCodeDigit,
+  dialingThirdCountryCodeDigit,
+  dialingDigitsAfterCountryCode,
+  dialingLineNumber,
   /* formatCountryCode */
   formatPhoneNumber,
   phoneNumberLengthBetween,
@@ -61,18 +65,10 @@ export default function IOSPhone() {
     const dialNumber = () => setPhoneNumber([...newPhoneNumber, number])
     const dialFirstCountryCodeDigit = () =>
       setPhoneNumber(`1 (${number}  )`.split(''))
-    const dialingSecondCountryCodeDigit = () =>
-      newPhoneNumber.length >= 1 &&
-      newPhoneNumber.length <= 7 &&
-      newPhoneNumber[4] === ' '
     const dialSecondCountryCodeDigit = () => {
       newPhoneNumber.splice(4, 1, number)
       setPhoneNumber([...newPhoneNumber])
     }
-    const dialingThirdCountryCodeDigit = () =>
-      newPhoneNumber.length >= 1 &&
-      newPhoneNumber.length <= 7 &&
-      newPhoneNumber[5] === ' '
     const dialThirdCountryCodeDigit = () => {
       newPhoneNumber.splice(5, 1, number)
       setPhoneNumber([...newPhoneNumber])
@@ -91,10 +87,6 @@ export default function IOSPhone() {
         setPhoneNumber([...newPhoneNumber, number])
       }
     }
-    const dialingLineNumber = () =>
-      newPhoneNumber.length >= 11 &&
-      newPhoneNumber.length <= 12 &&
-      newPhoneNumber.includes('(', ')')
     const dialLineNumber = () =>
       setPhoneNumber([...newPhoneNumber, '-', number])
     const phoneNumberLengthExceeded = () => newPhoneNumber.length >= 16
@@ -127,15 +119,14 @@ export default function IOSPhone() {
       dialNumber()
     } else if (dialingFirstCountryCodeDigit(newPhoneNumber)) {
       dialFirstCountryCodeDigit()
-    } else if (dialingSecondCountryCodeDigit()) {
+    } else if (dialingSecondCountryCodeDigit(newPhoneNumber)) {
       dialSecondCountryCodeDigit()
-    } else if (dialingThirdCountryCodeDigit()) {
+    } else if (dialingThirdCountryCodeDigit(newPhoneNumber)) {
       dialThirdCountryCodeDigit()
+      // Bug here
     } else if (dialingDigitsAfterCountryCode()) {
       dialDigitsAfterCountryCode()
-    } else if (dialingDigitsAfterCountryCode()) {
-      dialDigitsAfterCountryCode()
-    } else if (dialingLineNumber()) {
+    } else if (dialingLineNumber(newPhoneNumber)) {
       dialLineNumber()
     } else if (phoneNumberLengthExceeded()) {
       formatExceededLengthNumber(number)

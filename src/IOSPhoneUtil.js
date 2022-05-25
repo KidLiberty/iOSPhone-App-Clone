@@ -36,7 +36,27 @@ export const secondDigitIsOne = (newPhoneNumber, number) =>
   newPhoneNumber[1] === '1'
 export const dialingFirstCountryCodeDigit = newPhoneNumber =>
   newPhoneNumber.length === 1
-
+export const dialingSecondCountryCodeDigit = newPhoneNumber =>
+  newPhoneNumber.length >= 1 &&
+  newPhoneNumber.length <= 7 &&
+  newPhoneNumber[4] === ' '
+export const dialingThirdCountryCodeDigit = newPhoneNumber =>
+  newPhoneNumber.length >= 1 &&
+  newPhoneNumber.length <= 7 &&
+  newPhoneNumber[5] === ' '
+export const dialingDigitsAfterCountryCode = newPhoneNumber => {
+  if (newPhoneNumber.length >= 7 && newPhoneNumber.length <= 8) {
+    return true
+  } else if (newPhoneNumber.length >= 9 && newPhoneNumber.length <= 10) {
+    return false
+  }
+}
+export const dialingLineNumber = newPhoneNumber =>
+  newPhoneNumber.length >= 11 &&
+  newPhoneNumber.length <= 12 &&
+  newPhoneNumber.includes('(', ')')
+export const countryCodeLengthExceeded = newPhoneNumber =>
+  newPhoneNumber.length >= 16
 /* backspaceCountryCode */
 export const numberExceedsLength = newPhoneNumber =>
   newPhoneNumber.length <= 11 &&
