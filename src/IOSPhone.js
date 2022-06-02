@@ -123,7 +123,7 @@ export default function IOSPhone() {
       dialSecondCountryCodeDigit()
     } else if (dialingThirdCountryCodeDigit(newPhoneNumber)) {
       dialThirdCountryCodeDigit()
-      // Bug here
+      // Debug here
     } else if (dialingDigitsAfterCountryCode()) {
       dialDigitsAfterCountryCode()
     } else if (dialingLineNumber(newPhoneNumber)) {
@@ -289,9 +289,6 @@ export default function IOSPhone() {
   }
 
   const formatExceededLengthFont = () => {
-    // Is this better do as a global state?
-    // const newPhoneNumber = [...phoneNumber]
-
     if (phoneNumberMaxRange(newPhoneNumber)) {
       return 1
     } else if (phoneNumberInRange(newPhoneNumber, 14, 15)) {

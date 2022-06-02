@@ -12,18 +12,18 @@ export const ButtonNumberValues = [
   '0',
   '#'
 ]
-export const ButtonLetterValues = [
-  '+',
-  ' ',
-  'A B C',
-  'D E F',
-  'G H I',
-  'J K L',
-  'M N O',
-  'P Q R S',
-  'T U V',
-  'W X Y Z'
-]
+export const ButtonLetterValues = {
+  1: ' ',
+  2: 'A B C',
+  3: 'D E F',
+  4: 'G H I',
+  5: 'J K L',
+  6: 'M N O',
+  7: 'P Q R S',
+  8: 'T U V',
+  9: 'W X Y Z',
+  0: '+'
+}
 
 /* dialNumberWithCountryCode */
 export const numberStartsWithOne = (newPhoneNumber, number) =>
